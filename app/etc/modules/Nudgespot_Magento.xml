@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Nudgespot_Magento>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Nudgespot_Magento>
+    </modules>
+</config>

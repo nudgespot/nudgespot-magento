@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config>
+  <sections>
+    <nudgespot translate="label" module="nudgespot">
+      <label>Nudgespot</label>
+      <tab>advanced</tab>
+      <frontend_type>text</frontend_type>
+      <sort_order>990</sort_order>
+      <show_in_default>1</show_in_default>
+      <show_in_website>1</show_in_website>
+      <show_in_store>1</show_in_store>
+      <groups>
+        <settings translate="label">
+          <label>Nudgespot Settings</label>
+          <frontend_type>text</frontend_type>
+          <sort_order>1</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+            <nudgespot_api_token translate="label,comment">
+              <label>API Token</label>
+              <comment><![CDATA[You can find this in your Nudgespot account's <a href="https://app.nudgespot.com/settings">settings page</a>.]]></comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>1</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </nudgespot_api_token>
+
+            <nudgespot_api_secret translate="label,comment">
+              <label>API Secret</label>
+              <comment><![CDATA[You can find this in your Nudgespot account's <a href="https://app.nudgespot.com/settings">settings page</a>.]]></comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </nudgespot_api_secret>
+          </fields>
+        </settings>
+      </groups>
+    </nudgespot>
+  </sections>
+</config>
