@@ -27,11 +27,11 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       return $category_name ; 
     }
 
-    function getItem($cart, &$item) {
+    function getItem(&$item) {
       $productId = $item->getProduct()->getId();
       $name = addslashes($item->getProduct()->getName());
       $category = addslashes($this->getCategoryName($productId));
-      $qty = $cart->getItemQty($item->getProduct()->getId());
+      $qty = $item->getQty();
       $price = $item->getProduct()->getPrice();
       return array('id'=> $productId, 'name'=> $name, 'category' => $category, 'price' => $price, 'quantity' => $qty);
     }
@@ -45,7 +45,7 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       $cart = Mage::getSingleton('checkout/cart');
       $cart_items = array();
       foreach($items as &$item) {
-        array_push($cart_items, $this->getItem($cart, $item));
+        array_push($cart_items, $this->getItem($item));
       }
       $this->track('update_cart', array('items' => $cart_items,
                                           'cart_count'  => $cart->getItemsCount(),
@@ -102,6 +102,8 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       $revenue = $quote->getBaseGrandTotal();
       $this->track('purchase', array('items'  => $order_items,
                                'order_date'  => $order_date,
+                               'order_id' => $order->getId(),
+                               'order_number' => $order->getIncrementId(),
                                'order_total'	=> $revenue), $customer_email);
     }
 
@@ -133,6 +135,7 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
         $customer_id = $order->getCustomerId();
     	$customer = Mage::getModel('customer/customer')->load($customer_id);
     	$customer_email = $customer->getEmail();
+        $this->identify($customer);
     	$this->track('register', array(), $customer_email);
       }
     }
@@ -140,6 +143,7 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
     public function trackCustomerRegisterSuccess($observer) {
       $customer = $observer->getCustomer();
       $customer_email = $customer->getEmail();
+      $this->identify($customer);
       $this->track('register', array(), $customer_email);
     }
 
@@ -164,6 +168,15 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       exec("curl '" . $url . "-X POST -H Content-Type: application/json -d '" . json_encode($params) . "' >/dev/null 2>&1 &");
     }
     
+    public function identify($customer) {
+      Mage::log("Identifying customer: '" . $customer->getEmail());
+      $user = $this->getCustomerTrackInfo($customer);
+
+      $url = $this->host() . '/subscribers';
+      Mage::log("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . json_encode(array('subscriber' => $user)) . "' >/dev/null 2>&1 &");
+      exec("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . json_encode(array('subscriber' => $user)) . "' >/dev/null 2>&1 &"); 
+    }
+
     public function track($event, $properties = array(), $customer= null) {
       if (empty($customer)) {
         $customer = $this->getCustomerIdentity();
