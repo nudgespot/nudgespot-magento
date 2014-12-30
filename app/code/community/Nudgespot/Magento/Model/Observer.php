@@ -163,7 +163,6 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       $params['properties']['$initial_referrer'] = '$direct';
       $params['properties']['$initial_referring_domain'] = '$direct';
       $params['properties']['alias'] = $identifier;
-      $params['properties']['token'] = $this->token;
       $url = $this->host() . 'track/?data=';
       exec("curl '" . $url . "-X POST -H Content-Type: application/json -d '" . json_encode($params) . "' >/dev/null 2>&1 &");
     }
@@ -173,8 +172,9 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       $user = $this->getCustomerTrackInfo($customer);
 
       $url = $this->host() . '/subscribers';
-      Mage::log("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . json_encode(array('subscriber' => $user)) . "' >/dev/null 2>&1 &");
-      exec("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . json_encode(array('subscriber' => $user)) . "' >/dev/null 2>&1 &"); 
+      $json_params = str_replace("\\'", "u0027", json_encode(array('subscriber' => $user)));
+      Mage::log("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . $json_params . "' >/dev/null 2>&1 &");
+      exec("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . $json_params . "' >/dev/null 2>&1 &");
     }
 
     public function track($event, $properties = array(), $customer= null) {
@@ -194,9 +194,11 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
           'user' => $user
         );
 
-      $params['properties']['token'] = $this->token;
       $url = $this->host() . '/activities';
-      Mage::log("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . json_encode(array('activity' => $params)) . "' >/dev/null 2>&1 &");
-      exec("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . json_encode(array('activity' => $params)) . "' >/dev/null 2>&1 &"); 
+      Mage::log("Params: ");
+      Mage::log($params);
+      $json_params = str_replace("\\'", "u0027", json_encode(array('activity' => $params)));
+      Mage::log("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . $json_params . "' >/dev/null 2>&1 &");
+      exec("curl '" . $url . "' -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' -d '" . $json_params . "' >/dev/null 2>&1 &"); 
     }
 }
