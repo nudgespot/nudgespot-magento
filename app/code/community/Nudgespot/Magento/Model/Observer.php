@@ -187,11 +187,13 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       }
       Mage::log("Tracking '". $event . "' by " . $customer);
       $user = array();
-      $user['email'] = $customer;   
+      $user['email'] = $customer;
+      $now = new DateTime('NOW');   
       $params = array(
           'event' => $event,
           'properties' => $properties,
-          'user' => $user
+          'user' => $user,
+	  'timestamp' => $now->format(DateTime::ISO8601)
         );
 
       $url = $this->host() . '/activities';
