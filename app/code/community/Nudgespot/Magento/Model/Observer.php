@@ -61,7 +61,7 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
         $this->track('review_product', array('username'    => $post_data['nickname'],
                                           'review_title'       => $post_data['title'],
                                           'email' => $this->getCustomerIdentity(),
-                                          'product_id'=>$post_data['id']), null);
+                                          ), null);
       }
     }
 

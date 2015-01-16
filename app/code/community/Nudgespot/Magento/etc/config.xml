@@ -89,15 +89,7 @@
                     </nudgespot_add_coupon>
                 </observers>
             </controller_action_predispatch_onestepcheckout_index_add_coupon>
-            <review_save_after>
-                <observers>
-                    <nudgespot_product_review>
-                        <type>singleton</type>
-                        <class>Nudgespot_Magento_Model_Observer</class>
-                        <method>trackReview</method>
-                    </nudgespot_product_review>
-                </observers>
-            </review_save_after>
+
         </events>
     </frontend>
     <adminhtml>
