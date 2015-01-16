@@ -89,7 +89,7 @@
                     </nudgespot_add_coupon>
                 </observers>
             </controller_action_predispatch_onestepcheckout_index_add_coupon>
-            <review_controller_product_init_after>
+            <review_save_after>
                 <observers>
                     <nudgespot_product_review>
                         <type>singleton</type>
@@ -97,7 +97,7 @@
                         <method>trackReview</method>
                     </nudgespot_product_review>
                 </observers>
-            </review_controller_product_init_after>
+            </review_save_after>
         </events>
     </frontend>
     <adminhtml>

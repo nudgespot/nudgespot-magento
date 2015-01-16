@@ -58,9 +58,10 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       $action = $event->getControllerAction();
       $post_data = $action->getRequest()->getPost();
       if (isset($post_data['detail'])) {
-        $this->track('review_product', array('nickname'    => $post_data['nickname'],
-                                          'title'       => $post_data['title'],
-                                          'distinct_id' => $this->getCustomerIdentity()), null);
+        $this->track('review_product', array('username'    => $post_data['nickname'],
+                                          'review_title'       => $post_data['title'],
+                                          'email' => $this->getCustomerIdentity(),
+                                          'product_id'=>$post_data['id']), null);
       }
     }
 
@@ -136,7 +137,7 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
     	$customer = Mage::getModel('customer/customer')->load($customer_id);
     	$customer_email = $customer->getEmail();
         $this->identify($customer);
-    	$this->track('register', array(), $customer_email);
+        $this->track('register', array('email'=>$customer_email), $customer_email);
       }
     }
 
@@ -144,7 +145,7 @@ class Nudgespot_Magento_Model_Observer extends Mage_Core_Model_Abstract
       $customer = $observer->getCustomer();
       $customer_email = $customer->getEmail();
       $this->identify($customer);
-      $this->track('register', array(), $customer_email);
+      $this->track('register', array('email'=> $customer_email), $customer_email);
     }
 
     public function trackCoupon($observer) {
