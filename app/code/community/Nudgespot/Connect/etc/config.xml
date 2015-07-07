@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <modules>
-        <Nudgespot_Magento>
-            <version>0.1.1</version>
-        </Nudgespot_Magento>
+        <Nudgespot_Connect>
+            <version>1.0.0</version>
+        </Nudgespot_Connect>
     </modules>
     <global>
         <models>
             <nudgespot>
-                <class>Nudgespot_Magento_Model</class>
+                <class>Nudgespot_Connect_Model</class>
             </nudgespot>
         </models>
         <helpers>
             <nudgespot>
-                <class>Nudgespot_Magento_Helper</class>
+                <class>Nudgespot_Connect_Helper</class>
             </nudgespot>
         </helpers>
     </global>
@@ -30,7 +30,7 @@
                 <observers>
                     <nudgespot_order_save>
                         <type>singleton</type>
-                        <class>Nudgespot_Magento_Model_Observer</class>
+                        <class>Nudgespot_Connect_Model_Observer</class>
                         <method>trackOrder</method>
                     </nudgespot_order_save>
                 </observers>
@@ -39,7 +39,7 @@
                 <observers>
                     <nudgespot_customer_register_from_checkout>
                         <type>singleton</type>
-                        <class>Nudgespot_Magento_Model_Observer</class>
+                        <class>Nudgespot_Connect_Model_Observer</class>
                         <method>trackCustomerFromCheckout</method>
                     </nudgespot_customer_register_from_checkout>
                 </observers>
@@ -48,7 +48,7 @@
                 <observers>
                     <nudgespot_customer_register_success>
                         <type>model</type>
-                        <class>Nudgespot_Magento_Model_Observer</class>
+                        <class>Nudgespot_Connect_Model_Observer</class>
                         <method>trackCustomerRegisterSuccess</method>
                     </nudgespot_customer_register_success>
                 </observers>
@@ -57,7 +57,7 @@
               <observers>
                 <nudgespot_add_to_cart>
                   <type>singleton</type>
-                  <class>Nudgespot_Magento_Model_Observer</class>
+                  <class>Nudgespot_Connect_Model_Observer</class>
                   <method>trackAddToCart</method>
                 </nudgespot_add_to_cart>
               </observers>
@@ -66,7 +66,7 @@
               <observers>
                 <nudgespot_add_to_cart>
                   <type>singleton</type>
-                  <class>Nudgespot_Magento_Model_Observer</class>
+                  <class>Nudgespot_Connect_Model_Observer</class>
                   <method>trackAddToCart</method>
                 </nudgespot_add_to_cart>
               </observers>
@@ -75,7 +75,7 @@
                 <observers>
                     <nudgespot_add_coupon_from_cart>
                         <type>singleton</type>
-                        <class>Nudgespot_Magento_Model_Observer</class>
+                        <class>Nudgespot_Connect_Model_Observer</class>
                         <method>trackCoupon</method>
                     </nudgespot_add_coupon_from_cart>
                 </observers>
@@ -84,7 +84,7 @@
                 <observers>
                     <nudgespot_add_coupon>
                         <type>singleton</type>
-                        <class>Nudgespot_Magento_Model_Observer</class>
+                        <class>Nudgespot_Connect_Model_Observer</class>
                         <method>trackCoupon</method>
                     </nudgespot_add_coupon>
                 </observers>
